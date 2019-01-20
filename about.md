@@ -1,8 +1,8 @@
 ---
 layout: default
-title: About
+title: about_page
 ---
 
 # About page
 
-This page tells you a little bit about me
+This is my first page 
