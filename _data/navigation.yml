@@ -1,0 +1,22 @@
+docs:
+
+- title: Welcome
+  url: /#welcome
+  
+
+- title: About
+  url: /#about
+  
+
+- title: Jobs
+  url: /#jobs
+
+- title: Portfolio
+  url: /#portfolio
+
+- title: Blog
+  url: /#blog
+
+
+- title: Contact Me
+  url: /#contact
