@@ -1,11 +1,22 @@
-- name: Welcom
-  link: /
+docs:
+
+- title: Welcome
+  url: /#welcome
   
 
-- name: About me
-  link: /about.html
+- title: About
+  url: /#about
   
 
-- name: Portfolio
-  link: /portfolio.html 
- 
+- title: Jobs
+  url: /#jobs
+
+- title: Portfolio
+  url: /#portfolio
+
+- title: Blog
+  url: /#blog
+
+
+- title: Contact Me
+  url: /#contact
