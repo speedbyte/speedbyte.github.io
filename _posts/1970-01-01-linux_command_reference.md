@@ -4,6 +4,55 @@ title: "Command Reference"
 date: 1970-01-01
 ---
 
+      init [--] [<path>...]
+           Initialize the submodules recorded in the index (which were added and committed elsewhere) by setting submodule.$name.url in .git/config. It uses the same setting from .gitmodules as a
+           template. If the URL is relative, it will be resolved using the default remote. If there is no default remote, the current repository will be assumed to be upstream.
+
+           Optional <path> arguments limit which submodules will be initialized. If no path is specified and submodule.active has been configured, submodules configured to be active will be
+           initialized, otherwise all submodules are initialized.
+
+           When present, it will also copy the value of submodule.$name.update. This command does not alter existing information in .git/config. You can then customize the submodule clone URLs in
+           .git/config for your local setup and proceed to git submodule update; you can also just use git submodule update --init without the explicit init step if you do not intend to customize
+           any submodule locations.
+
+           See the add subcommand for the definition of default remote.
+
+       deinit [-f|--force] (--all|[--] <path>...)
+           Unregister the given submodules, i.e. remove the whole submodule.$name section from .git/config together with their work tree. Further calls to git submodule update, git submodule foreach
+           and git submodule sync will skip any unregistered submodules until they are initialized again, so use this command if you don’t want to have a local checkout of the submodule in your
+           working tree anymore.
+
+           When the command is run without pathspec, it errors out, instead of deinit-ing everything, to prevent mistakes.
+
+           If --force is specified, the submodule’s working tree will be removed even if it contains local modifications.
+
+           If you really want to remove a submodule from the repository and commit that use git-rm(1) instead. See gitsubmodules(7) for removal options.
+
+
+
+GeneralCommands
+
+visudo
+username ALL=(ALL) NOPASSWD: /bin/login
+root ALL=(ALL:ALL) ALL
+
+
+NetworkManager
+
+etc -> run -> ust/lib -> NetworkManager.conf
+
+
+
+    In Device Manager, right-click on the Intel card and select Properties
+    Then click on the Advanced tab.
+    You will see an option called Wireless mode. Set the mode from 802.11a/b/g to just 802.11b/g.
+        This will prevent the card from scanning or accessing the 5Ghz 802.11a band and just leave you with the 2.4Ghz b/g band to work with.
+
+
+
+wget "publickey"
+sudo apt-key add "publickey"
+add a new file in /etc/sources.list.d/example.list
 
 git submodule update --init
 git submodule foreach git checkout tags/boost-1.67.0
@@ -14,12 +63,11 @@ Disk partitioning.
 lsblk uses 1024 to calculate GB and parted uses 1000 and hence there is a difference in the reported size.
 
 rsync include/ does not copy include
-cp include/ copies include
 rsync include copies include
+cp include/ copies include
 
 pgrep -P #id
-
-   ps -opid,pcpu --sort=-pid
+ps -opid,pcpu --sort=-pid
 
 Themes
 
@@ -30,6 +78,21 @@ NautilusWindow * .view {
 }
 
 
+pushing all branches
+
+for remote in `git branch -r`; do git branch --track $remote; done
+git fetch --all
+git pull --all
+
+Now you can see all the branches:
+
+git branch
+
+To push all the branches try:
+
+git push --all
+
+
     git diff -C #checks for renames.
     git diff --word-diff -U0
     git config -f .gitmodules submodule.xxx.ignore dirty
@@ -38,6 +101,13 @@ NautilusWindow * .view {
     git config --global credential.helper 'cache --timeout=2628000'
 
 ====== Synaptic, Mouse ======
+
+
+cat /sys/bus/serio/devices/serio1/protocol
+
+make sure synaptic_drv.so is present in the /usr/lib
+xorg configuratin files should be present in /usr/share/X11/xorg.conf.d
+synclient would throw no synpatics drivers loaded error, if the drivers are not loaded
 
 sudo modprobe -r psmouse
 sudo modprobe psmouse
@@ -948,6 +1018,7 @@ To  add/delete a route:
     sudo ip addr add 192.168.1.14/24 dev eth0
     sudo ip link set dev eth0 up
     sudo ip route add default via 192.168.1.1
+    sudo ip addr flush interface-name
 
 
 
@@ -1030,7 +1101,11 @@ If eth1 exists in the routing table, then you can add a route for eth0. You have
 
 Tested curl www.google.de --interface wlan0
 
+iwlist is deperecated and obselete. The newer challenger is iw. iwlist scan provides much lesser output than iw scan
 
+Display the third line from a text file
+ls | sed '3,3!d' 
+ls | sed -n '3,3p'
 
 Attaching WLAN to LInux
 
@@ -1046,7 +1121,8 @@ Attaching WLAN to LInux
 
 hostname  hostname newname cat /etc/hosts would need to be changed because sudo  requires DNS lookups in certain cases and it cannot resolve your newly  sset hostname. echo newname | sudo tee /etc/hostname
 
-ls  /sys/class/net or ip addr sudo etc/init.d/NetworkManager stop sudo  /etc/init.d/NetworkManager start sudo chmod +x etc/init.d/NetworkManager  sudo chmod -x etc/init.d/NetworkManager sudo update-rc.d -f  NetworkManager remove sudo update-rc.d -f NetworkManager defaults 50  sudo apt-get install NetworkManager sudo apt-get purge NetworkManager
+ls  /sys/class/net 
+or ip addr sudo etc/init.d/NetworkManager stop sudo  /etc/init.d/NetworkManager start sudo chmod +x etc/init.d/NetworkManager  sudo chmod -x etc/init.d/NetworkManager sudo update-rc.d -f  NetworkManager remove sudo update-rc.d -f NetworkManager defaults 50  sudo apt-get install NetworkManager sudo apt-get purge NetworkManager
 
 
 The  above two is equivalent to writing in the /etc/network/interfaces. The  /network/interfaces is permanent but the above commands are just for  that session.
@@ -1055,6 +1131,15 @@ Resolving DNS: sudo vi /etc/resolv.conf enter: search example.com domain example
 
 
 ====== XWindow ======
+
+    wmctrl -m
+
+    sudo mokutil --enable-validation
+    sudo mokutil --enroll-key
+
+    window manager : xdg_current_desktop
+    display manager : /etc/X11/default-display-manager
+    desktop envirionment
 
     dpkg-reconfigure xserver-xfree86
 
@@ -1125,6 +1210,10 @@ Download GpuTest : \url{http://www.geeks3d.com/20140304/gputest-0-7-0-opengl-ben
 Switching between graphic cards:
 
 There is only one graphic card in the VIRES PC. Hence there is no chance of switching between graphic cards. The only thing one can do is switch between drivers. One is the nouveau provided by xfreedesktop.org and the other is directly from nvidia. Both of them use different OpenGL drivers.
+
+    dkms status
+    vim /usr/src/nvidia/dkms.conf
+    lspci -vv ( this shows the kernel driver available and kernel driver in use. If no kernel driver line is available, that means this driver is not at all used)
  
     sudo prime-select nvidia
     sudo prime-select intel
@@ -1133,6 +1222,9 @@ There is only one graphic card in the VIRES PC. Hence there is no chance of swit
     
     nouveau.noaccel=1
     nouveau.modeset=0
+
+    sudo update-alternatives --config packagename
+    sudo dkpg --configure --all
 
 
 ====== Virtual ======
@@ -1253,6 +1345,65 @@ To configure the backlight, put the value in the following file
 echo 53 > /sys/class/backlight/intel_backlight/brightnes
 
  in /etc/rc.local and then restart.
+
+  Fresh drivers from upstream, currently shipping Nvidia.
+
+## Current Status
+
+Current long-lived branch release: `nvidia-430` (430.40)
+Dropped support for Fermi series (https://nvidia.custhelp.com/app/answers/detail/a_id/4656)
+
+Old long-lived branch release: `nvidia-390` (390.129)
+
+For GF1xx GPUs use `nvidia-390` (390.129)
+For G8x, G9x and GT2xx GPUs use `nvidia-340` (340.107)
+For NV4x and G7x GPUs use `nvidia-304` (304.137) End-Of-Life!
+
+Support timeframes for Unix legacy GPU releases:
+https://nvidia.custhelp.com/app/answers/detail/a_id/3142
+
+## What we're working on right now:
+
+- Normal driver updates
+- Help Wanted: Mesa Updates for Intel/AMD users, ping us if you want to help do this work, we're shorthanded.
+
+## WARNINGS:
+
+This PPA is currently in testing, you should be experienced with packaging before you dive in here:
+
+Volunteers welcome!
+
+### How you can help:
+
+## Install PTS and benchmark your gear:
+
+    sudo apt-get install phoronix-test-suite
+
+Run the benchmark:
+
+    phoronix-test-suite default-benchmark openarena xonotic tesseract gputest unigine-valley
+
+and then say yes when it asks you to submit your results to openbechmarking.org. Then grab a cup of coffee, it takes a bit for the benchmarks to run. Depending on the version of Ubuntu you're using it might preferable for you to grabs PTS from upstream directly: http://www.phoronix-test-suite.com/?k=downloads
+
+## Share your results with the community:
+
+Post a link to your results (or any other feedback to): https://launchpad.net/~graphics-drivers-testers
+
+Remember to rerun and resubmit the benchmarks after driver upgrades, this will allow us to gather a bunch of data on performance that we can share with everybody.
+
+If you run into old documentation referring to other PPAs, you can help us by consolidating references to this PPA.
+
+If someone wants to go ahead and start prototyping on `software-properties-gtk` on what the GUI should look like, please start hacking!
+
+## Help us Help You!
+
+We use the donation funds to get the developers hardware to test and upload these drivers, please consider donating to the "community" slider on the donation page if you're loving this PPA:
+
+http://www.ubuntu.com/download/desktop/contribute
+ More info: https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa
+Press [ENTER] to continue or Ctrl-c to cancel adding it.
+
+
 
 Laptopmode
 
@@ -1682,6 +1833,19 @@ boot
 
 
 fsarchiver probe
+
+
+====== CMAKE ======
+
+
+
+Yes, there is:
+
+File -> Settings... -> Build, Execution, Deployment -> Toolchains -> CMake executable
+
+Then set the custom path.
+
+Note that I do not know if this will solve your specific problem.
 
 
 
